@@ -2,3 +2,348 @@ syntax on
 
 " Wrap gitcommit file types at the appropriate length
 filetype indent plugin on
+
+" Compatibility
+set nocompatible
+
+" Filetypes
+filetype off
+
+" Backups {{{
+    set backup                        " enable backups
+    set noswapfile                    " it's 2013, Vim.
+
+    set backupdir=~/.vim/tmp/backup/ " backups
+    set directory=~/.vim/tmp/swap/   " swap files
+
+    if has('persistent_undo')
+        set undodir=~/.vim/tmp/undo/     " undo files
+
+
+        " Make those folders automatically if they don't already exist.
+        if !isdirectory(expand(&undodir))
+            call mkdir(expand(&undodir), "p")
+        endif
+    endif
+
+    if !isdirectory(expand(&backupdir))
+        call mkdir(expand(&backupdir), "p")
+    endif
+    if !isdirectory(expand(&directory))
+        call mkdir(expand(&directory), "p")
+    endif
+
+" }}}
+
+call plug#begin('~/.vim/plugged')
+
+" Fix smarty commenting in Nerd Commenter
+
+:let g:NERDCustomDelimiters = {
+\ 'smarty': { 'left': '{%*', 'right': '*%}' }
+\ }
+
+" All the plugins
+Plug 'scrooloose/syntastic'
+Plug 'bling/vim-airline'
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdcommenter'
+Plug 'SirVer/ultisnips'
+" Insert mode tab autocomplete
+Plug 'ervandew/supertab'
+Plug 'majutsushi/tagbar'
+Plug 'pangloss/vim-javascript'
+Plug 'briancollins/vim-jst'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-scripts/smarty-syntax'
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'fatih/vim-go'
+Plug 'tpope/vim-unimpaired'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'rking/ag.vim'
+Plug 'sgur/vim-editorconfig'
+Plug 'taketwo/vim-ros'
+Plug 'rhysd/vim-clang-format'
+Plug 'ternjs/tern_for_vim'
+Plug 'flowtype/vim-flow'
+
+" All the colorschemes.
+Plug 'flazz/vim-colorschemes'
+Plug 'sjl/badwolf'
+Plug 'YorickPeterse/Autumn.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'embear/vim-localvimrc'
+Plug 'junegunn/seoul256.vim'
+
+filetype plugin indent on
+call plug#end()
+
+let mapleader=","
+
+" Colorscheme Settings
+syntax on
+set synmaxcol=800
+set t_Co=256
+set background=dark
+
+try
+    colorscheme molokai
+    let g:seoul256_background = 233
+    colorscheme seoul256
+catch /^Vim\%((\a\+)\)\=:E185/
+endtry
+
+"Indentation settings
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set autoindent
+set smarttab
+set hidden
+
+"Statusline settings"
+set laststatus=2
+"let g:Powerline_symbols='fancy'
+let g:Powerline_cache_enabled=1
+" Formatting
+set formatoptions=croqn1
+silent! set formatoptions+=j
+set nojoinspaces
+
+
+"Convenience mappings"
+inoremap jj <Esc>`^
+inoremap JJ <Esc>`^
+inoremap jk <Esc>`^
+inoremap JK <Esc>`^
+cnoremap w!! %!sudo tee > /dev/null %
+nnoremap J mzJ`z
+
+" Search for work under cursor wth Ag
+nnoremap K :Ag "\b<C-R><C-W>\b"<CR>:cw<CR>
+nnoremap ( /n \<<C-R><C-W>\><CR>
+
+"Reasonable line movement"
+nnoremap j gj
+nnoremap k gk
+vnoremap j gj
+vnoremap k gk
+
+"Window movement mappings"
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+" Matching
+silent! runtime macros/matchit.vim
+
+" Netrw
+if has("eval")
+    let g:netrw_silent = 1
+    let g:netrw_liststyle = 3
+endif
+
+"Get rid of annoying bell sound"
+set noerrorbells visualbell t_vb=
+
+"NERDTree settings"
+let NERDTreeIgnore=['\.pyc$', '\~$', '\.rbc$']
+let NERDTreeMinimalUI=1
+let NERDTreeDirArrows=1
+
+" Messages
+set shortmess+=I
+
+" Miscellaneous
+set backspace=indent,eol,start
+set modelines=0
+set report=0
+
+set number
+set mouse=r
+
+" Objects
+onoremap ir i[
+onoremap ar a[
+vnoremap ir i[
+vnoremap ar a[
+
+" Paste
+set nopaste
+set pastetoggle=<F2>
+
+" Reading
+set autoread
+
+" Scrolling
+set scrolloff=5
+set sidescrolloff=16
+
+" Search
+if has("extra_search")
+    set incsearch
+    set ignorecase
+    set smartcase
+    set nohlsearch
+    nnoremap <leader>h :set hlsearch!<CR>
+    nnoremap <leader>i :set incsearch!<CR>
+    nnoremap <C-l> :nohlsearch<CR><C-l>
+endif
+
+" Spelling
+if has("spell")
+    set spelllang=en_us
+    nnoremap <leader>s :setlocal spell!<CR>
+endif
+
+
+" Terminal
+set ttyfast
+set visualbell t_vb=
+
+" Typos
+if has("user_commands")
+    command! -bang -complete=file -nargs=? E e<bang> <args>
+    command! -bang -complete=file -nargs=? W w<bang> <args>
+    command! -bang -complete=file -nargs=? WQ wq<bang> <args>
+    command! -bang -complete=file -nargs=? Wq wq<bang> <args>
+    command! -bang Q q<bang>
+    command! -bang Qa qa<bang>
+    command! -bang QA qa<bang>
+    command! -bang Wa wa<bang>
+    command! -bang WA wa<bang>
+endif
+
+if &diff
+    colorscheme jellybeans
+    let g:lite_dfm_normal_bg_cterm=237
+    nnoremap qq :qa<cr>
+endif
+augroup diffopen
+    autocmd!
+    autocmd FilterWritePre * if &diff | colorscheme jellybeans | endif
+augroup end
+
+" Unmaps
+noremap <F1> <nop>
+nnoremap Q <nop>
+
+" Visual
+if has("virtualedit")
+    set virtualedit+=block
+endif
+
+" Wildmenu
+if has("wildmenu")
+    set wildmenu
+    set wildmode=longest:list
+    if has("wildignore")
+        set wildignore+=*.a,*.o
+        set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+        set wildignore+=*~,*.swp,*.tmp
+        set wildignore+=*.pyc
+        set wildignore+=*.class
+    endif
+    if exists("&wildignorecase")
+        set wildignorecase
+    endif
+endif
+
+" Windows
+if has("windows")
+    set splitbelow
+    if has("vertsplit")
+        set splitright
+    endif
+    if exists("&showtabline")
+        set showtabline=1
+    endif
+endif
+
+" Yanking
+nnoremap Y y$
+
+" Local
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
+map q: <cr>
+
+set completeopt=menuone,longest,preview
+
+let g:Powerline_symbols = 'unicode'
+let g:SuperTabDefaultCompletionType = "context"
+let g:EclimCompletionMethod = 'omnifunc'
+
+" always open nerd tree in current directory
+function! ToggleNerdTree()
+    if g:NERDTree.IsOpen()
+        NERDTreeToggle
+    elseif !empty(expand('%'))
+        NERDTree %
+    else
+        NERDTree
+    endif
+endfunction
+
+" Leader Keybindings
+nnoremap <Leader>n :call ToggleNerdTree()<CR>
+nnoremap <leader>b :Tagbar<cr>
+
+
+nnoremap == <C-w>=
+au BufNewFile,BufRead *.html set syntax=jst
+au Filetype python inoremap pdb import pdb; pdb.set_trace()
+
+" open file under cursor in vertical split / tab
+nnoremap <Bar> :vertical wincmd f<CR>
+nnoremap _ :tab wincmd f<CR>
+
+" splits from quickfix
+let g:qfenter_vopen_map = ['<Bar>']
+let g:qfenter_topen_map = ['_']
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
+autocmd QuickFixCmdPost *grep* cwindow
+
+let hostname = substitute(system('hostname'), '\n', '', '')
+nnoremap <C-p> :FZF<cr>
+nnoremap <leader>t :Tags<CR>
+nnoremap <leader>m :History<CR>
+nnoremap <leader>b :Buffers<CR>
+
+" Go specific settings
+
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>gb :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <leader>gr :GoRun<CR>
+autocmd FileType go nmap \|  <Plug>(go-def-vertical)
+autocmd FileType go nmap <Leader>gi <Plug>(go-info)
+autocmd FileType c,cpp ClangFormatAutoEnable
