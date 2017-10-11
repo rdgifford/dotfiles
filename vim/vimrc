@@ -42,34 +42,23 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/syntastic'
 Plug 'bling/vim-airline'
 Plug 'scrooloose/nerdtree'
-Plug 'kchmck/vim-coffee-script'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
 Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips'
+" Insert mode tab autocomplete
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'
-Plug 'xsbeats/vim-blade'
-Plug 'itspriddle/vim-stripper'
 Plug 'pangloss/vim-javascript'
 Plug 'briancollins/vim-jst'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-gitgutter'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'vim-scripts/smarty-syntax'
-Plug 'derekwyatt/vim-scala'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'fatih/vim-go'
-Plug 'mattn/webapi-vim'
-Plug 'yssl/QFEnter'
 Plug 'tpope/vim-unimpaired'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rking/ag.vim'
-Plug 'lambdatoast/elm.vim'
-Plug 'Shougo/vimproc.vim'
-Plug 'Quramy/tsuquyomi'
-Plug 'leafgarland/typescript-vim'
 Plug 'sgur/vim-editorconfig'
 Plug 'taketwo/vim-ros'
 Plug 'rhysd/vim-clang-format'
@@ -282,9 +271,6 @@ if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-" Compile Latex when I save it.
-au BufWritePost *.tex "silent !pdflatex %"
-
 map q: <cr>
 
 set completeopt=menuone,longest,preview
@@ -310,11 +296,6 @@ nnoremap <leader>b :Tagbar<cr>
 
 
 nnoremap == <C-w>=
-
-au Filetype blade hi htmlError ctermbg=none
-au Filetype blade hi htmlError ctermfg=196
-
-au Filetype php setlocal ai
 au BufNewFile,BufRead *.html set syntax=jst
 au Filetype python inoremap pdb import pdb; pdb.set_trace()
 
@@ -325,12 +306,6 @@ nnoremap _ :tab wincmd f<CR>
 " splits from quickfix
 let g:qfenter_vopen_map = ['<Bar>']
 let g:qfenter_topen_map = ['_']
-
-" open/close quickfix easily
-if !&diff
-    nnoremap qo :copen<cr>
-    nnoremap qq :ccl<cr>
-endif
 
 " The Silver Searcher
 if executable('ag')
@@ -361,31 +336,6 @@ function! s:build_go_files()
     call go#cmd#Build(0)
   endif
 endfunction
-
-" Gets the URL to a file on github
-function! Github()
-python << EOF
-
-import vim
-import subprocess
-import os, sys, re
-
-def get_cmd_output(cmd):
-    return subprocess.check_output(cmd).rstrip().decode('utf-8')
-
-file_name = vim.current.buffer.name
-path = os.path.realpath(file_name)
-
-git_branch = get_cmd_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
-blob_path = get_cmd_output(['git', 'ls-tree', '--full-name', '--name-only', 'HEAD', path])
-current_line = vim.current.range.start + 1
-
-github_repo_url = get_cmd_output(['hub', 'browse', '-u', '--', 'blob/%s/%s#L%d' % (git_branch, blob_path, current_line)])
-print github_repo_url
-EOF
-endfunction
-
-nnoremap gh :call Github()<cr>
 
 autocmd FileType go nmap <leader>gb :<C-u>call <SID>build_go_files()<CR>
 autocmd FileType go nmap <leader>gr :GoRun<CR>
