@@ -1,4 +1,7 @@
+" Honestly IDK
 syntax on
+
+call plug#begin('~/.vim/plugged')
 
 " Wrap gitcommit file types at the appropriate length
 filetype indent plugin on
@@ -35,10 +38,8 @@ filetype off
 
 " }}}
 
-call plug#begin('~/.vim/plugged')
 
 " Fix smarty commenting in Nerd Commenter
-
 :let g:NERDCustomDelimiters = {
 \ 'smarty': { 'left': '{%*', 'right': '*%}' }
 \ }
@@ -81,7 +82,7 @@ Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'embear/vim-localvimrc'
 Plug 'junegunn/seoul256.vim'
 
-filetype plugin indent on
+" filetype plugin indent on
 call plug#end()
 
 let mapleader=","
