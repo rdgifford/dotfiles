@@ -66,7 +66,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rking/ag.vim'
 Plug 'sgur/vim-editorconfig'
-Plug 'taketwo/vim-ros'
 Plug 'rhysd/vim-clang-format'
 Plug 'ternjs/tern_for_vim'
 Plug 'flowtype/vim-flow'
@@ -348,3 +347,19 @@ autocmd FileType go nmap <leader>gr :GoRun<CR>
 autocmd FileType go nmap \|  <Plug>(go-def-vertical)
 autocmd FileType go nmap <Leader>gi <Plug>(go-info)
 autocmd FileType c,cpp ClangFormatAutoEnable
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
