@@ -55,6 +55,7 @@ Plug 'SirVer/ultisnips'
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'briancollins/vim-jst'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-gitgutter'
@@ -363,3 +364,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" Enable JSX highlighting for files w/o .jsx extension
+let g:jsx_ext_required = 0
