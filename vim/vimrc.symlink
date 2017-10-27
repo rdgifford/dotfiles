@@ -45,7 +45,8 @@ filetype off
 \ }
 
 " All the plugins
-Plug 'scrooloose/syntastic'
+" Asynchronous Lint Engine for realtime linting
+Plug 'w0rp/ale'
 Plug 'bling/vim-airline'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-fugitive'
@@ -367,3 +368,15 @@ let g:fzf_colors =
 
 " Enable JSX highlighting for files w/o .jsx extension
 let g:jsx_ext_required = 0
+
+" Enable pangloss/vim-javascript Flow highlighting
+let g:javascript_plugin_flow = 1
+
+"Use locally installed flow instead of requiring global one
+let local_flow = finddir('node_modules', '.;') . '/.bin/flow'
+if matchstr(local_flow, "^\/\\w") == ''
+    let local_flow= getcwd() . "/" . local_flow
+endif
+if executable(local_flow)
+  let g:flow#flowpath = local_flow
+endif
