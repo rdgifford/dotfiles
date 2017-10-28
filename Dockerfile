@@ -3,7 +3,9 @@ FROM ubuntu:trusty
 
 # Install.
 RUN apt-get update \
-	&& apt-get install -y curl file vim g++ gawk git make sudo uuid-runtime \
+	&& apt-get install -y software-properties-common curl file g++ gawk git make sudo uuid-runtime \
+    && add-apt-repository ppa:jonathonf/vim \
+    && apt update && apt install -y vim \
 	&& localedef -i en_US -f UTF-8 en_US.UTF-8 \
 	&& useradd -m -s /bin/bash admin \
 	&& echo 'admin ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers \
