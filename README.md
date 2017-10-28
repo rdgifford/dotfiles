@@ -16,7 +16,7 @@ symlinked without extension into `$HOME` when you run `script/bootstrap`.
 
 A lot of stuff. Seriously, a lot of stuff. Check them out in the file browser
 above and see what components may mesh up with you.
-[Fork it](https://github.com/holman/dotfiles/fork), remove what you don't
+[Fork it](https://github.com/rdgifford/dotfiles/fork), remove what you don't
 use, and build on what you do use.
 
 ## components
@@ -43,7 +43,7 @@ There's a few special files in the hierarchy.
 Run this:
 
 ```sh
-git clone https://github.com/holman/dotfiles.git ~/.dotfiles
+git clone https://github.com/rdgifford/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 ```
