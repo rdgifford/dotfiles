@@ -5,20 +5,21 @@ FROM ubuntu:trusty
 RUN apt-get update \
 	&& apt-get install -y curl file vim g++ gawk git make sudo uuid-runtime \
 	&& localedef -i en_US -f UTF-8 en_US.UTF-8 \
-	&& useradd -m -s /bin/bash linuxbrew \
-	&& echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
+	&& useradd -m -s /bin/bash admin \
+	&& echo 'admin ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
-USER linuxbrew
-WORKDIR /home/linuxbrew
-ENV PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH \
+USER admin
+WORKDIR /home/admin
+ENV PATH=/home/admin/.linuxbrew/bin:/home/admin/.linuxbrew/sbin:$PATH \
+    HOME=/home/admin \
 	SHELL=/bin/bash \
-	USER=linuxbrew
+	USER=admin
   
 # Add files.
 ADD . $HOME/Workspace/dotfiles
 
 # Install Homebrew so script/install can install other deps
-RUN sh /Workspace/dotfiles/homebrew/install.sh
+RUN sh $HOME/Workspace/dotfiles/homebrew/install.sh
 
 # Define default command.
 CMD ["bash"]
