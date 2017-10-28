@@ -17,8 +17,9 @@ then
   elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
   then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+    export PATH="/home/$USER/.linuxbrew/bin:$PATH"
     test -d ~/.linuxbrew && PATH="$HOME/.linuxbrew/bin:$HOME/.linuxbrew/sbin:$PATH"
-    test -d /home/linuxbrew/.linuxbrew && PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:$PATH"
+    test -d /home/$USER/.linuxbrew && PATH="/home/$USER/.linuxbrew/bin:/home/$USER/.linuxbrew/sbin:$PATH"
     test -r ~/.bash_profile && echo 'export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"' >>~/.bash_profile
     echo 'export PATH="$(brew --prefix)/bin:$(brew --prefix)/sbin:$PATH"' >>~/.profile
     brew doctor
