@@ -18,12 +18,12 @@ ENV HOME=/home/admin \
     PATH=/home/admin/.linuxbrew/bin:/home/admin/.linuxbrew/sbin:$PATH 
   
 # Add files.
-ADD . $HOME/Workspace/dotfiles
+ADD . $HOME/.dotfiles
 
 # Install Homebrew so script/install can install other deps
-RUN sh $HOME/Workspace/dotfiles/homebrew/install.sh \
-    && sh $HOME/Workspace/dotfiles/script/bootstrap \
-    && sh $HOME/Workspace/dotfiles/script/install
+RUN sh $HOME/.dotfiles/homebrew/install.sh \
+    && sh $HOME/.dotfiles/script/bootstrap \
+    && sh $HOME/.dotfiles/script/install
 
 # Define default command.
 CMD ["bash"]
