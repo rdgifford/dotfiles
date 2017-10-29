@@ -45,6 +45,9 @@ then
     # Set macOS defaults
     $ZSH/macos/set-defaults.sh
 fi
+# Bootstrap dotfiles (symlink)
+echo "› $ZSH/script/bootstrap"
+$ZSH/script/bootstrap
 
 # Install homebrew
 $ZSH/homebrew/install.sh 2>&1
