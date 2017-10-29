@@ -23,9 +23,10 @@ ENV HOME=/home/admin \
 ADD . $HOME/.dotfiles
 
 # Install Homebrew so script/install can install other deps
-RUN sh $HOME/.dotfiles/homebrew/install.sh \
-    && sh $HOME/.dotfiles/script/bootstrap \
-    && sh $HOME/.dotfiles/script/install
+RUN bash $HOME/.dotfiles/bin/dot
+#RUN sh $HOME/.dotfiles/homebrew/install.sh \
+    #&& sh $HOME/.dotfiles/script/bootstrap \
+    #&& sh $HOME/.dotfiles/script/install
 
 # Define default command.
 CMD ["bash"]
