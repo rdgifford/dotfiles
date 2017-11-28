@@ -48,28 +48,36 @@ filetype off
 " Asynchronous Lint Engine for realtime linting
 Plug 'w0rp/ale'
 Plug 'bling/vim-airline'
+" File system explorer
 Plug 'scrooloose/nerdtree'
+" Git wrapper
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
+" Snippets w/ tab autocomplete
 Plug 'SirVer/ultisnips'
 " Insert mode tab autocomplete
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'
 Plug 'pangloss/vim-javascript'
+" Automatic JS dependency imports
+Plug 'Galooshi/vim-import-js'
 Plug 'mxw/vim-jsx'
 Plug 'briancollins/vim-jst'
 Plug 'nathanaelkane/vim-indent-guides'
+" Git diff in sign column and staging / undoing hunks
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/smarty-syntax'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'fatih/vim-go'
 Plug 'tpope/vim-unimpaired'
+" CLI fuzzy file finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'rking/ag.vim'
 Plug 'sgur/vim-editorconfig'
 Plug 'rhysd/vim-clang-format'
 Plug 'ternjs/tern_for_vim'
+" Flow JS type checker
 Plug 'flowtype/vim-flow'
 
 " All the colorschemes.
@@ -380,3 +388,5 @@ endif
 if executable(local_flow)
   let g:flow#flowpath = local_flow
 endif
+
+com! FormatJSON %!python -m json.tool
