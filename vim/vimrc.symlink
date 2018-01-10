@@ -73,23 +73,20 @@ Plug 'tpope/vim-unimpaired'
 " CLI fuzzy file finder
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'rking/ag.vim'
+"Plug 'rking/ag.vim'
 Plug 'sgur/vim-editorconfig'
 Plug 'rhysd/vim-clang-format'
 Plug 'ternjs/tern_for_vim'
+
 " Flow JS type checker
 Plug 'flowtype/vim-flow'
 
 " All the colorschemes.
 Plug 'flazz/vim-colorschemes'
-Plug 'sjl/badwolf'
-Plug 'YorickPeterse/Autumn.vim'
-Plug 'nanotech/jellybeans.vim'
 Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'embear/vim-localvimrc'
 Plug 'junegunn/seoul256.vim'
+
+" Mappings to easily delete, change and add such surroundings in pairs
 Plug 'tpope/vim-surround'
 
 " filetype plugin indent on
@@ -393,7 +390,7 @@ endif
 com! FormatJSON %!python -m json.tool
 
 " Autosource vimrc from if it's changed
-augroup myvimrc
-    au!
-    au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
-augroup END
+"augroup myvimrc
+    "au!
+    "au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+"augroup END
