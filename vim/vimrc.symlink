@@ -338,7 +338,7 @@ nnoremap <leader>b :Buffers<CR>
 " Go specific settings
 
 let g:go_fmt_command = "goimports"
-let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave = 0 
 
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
