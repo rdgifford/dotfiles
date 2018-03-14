@@ -1,0 +1,2 @@
+1. path to oh my zsh install should be generated from user
+2. oh my zsh should auto install
