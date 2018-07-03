@@ -53,8 +53,14 @@ Plug 'scrooloose/nerdtree'
 " Git wrapper
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
-" Snippets w/ tab autocomplete
+" Snippets w/ tab autocomplete engine
 Plug 'SirVer/ultisnips'
+" Snippets are separated from the engine
+Plug 'honza/vim-snippets'
+" ES2015 code snippets (Optional)
+Plug 'epilande/vim-es2015-snippets'
+" React code snippets
+Plug 'epilande/vim-react-snippets'
 " Insert mode tab autocomplete
 Plug 'ervandew/supertab'
 Plug 'majutsushi/tagbar'
@@ -88,6 +94,9 @@ Plug 'junegunn/seoul256.vim'
 
 " Mappings to easily delete, change and add such surroundings in pairs
 Plug 'tpope/vim-surround'
+
+" Trigger configuration (Optional)
+let g:UltiSnipsExpandTrigger="<C-l>"
 
 " filetype plugin indent on
 call plug#end()
@@ -394,3 +403,38 @@ com! FormatJSON %!python -m json.tool
     "au!
     "au BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
 "augroup END
+
+if has('python')
+  command! -nargs=* Py python <args>
+elseif has('python3')
+  command! -nargs=* Py python3 <args>
+endif
+
+" Gets the URL to a file on github
+function! Github()
+Py << EOF
+
+import vim
+import subprocess
+import os, sys, re
+
+def get_cmd_output(cmd):
+    return subprocess.check_output(cmd).rstrip().decode('utf-8')
+
+file_name = vim.current.buffer.name
+path = os.path.realpath(file_name)
+
+git_branch = get_cmd_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
+if '/' in git_branch:
+    blob_path = get_cmd_output(['git', 'rev-parse', 'HEAD'])
+else:
+    blob_path = git_branch
+file_path = get_cmd_output(['git', 'ls-tree', '--full-name', '--name-only', 'HEAD', path])
+current_line = vim.current.range.start + 1
+
+github_repo_url = get_cmd_output(['hub', 'browse', '-u', '--', 'blob/%s/%s#L%d' % (blob_path, file_path, current_line)])
+print(github_repo_url)
+EOF
+endfunction
+
+nnoremap gh :call Github()<cr>
